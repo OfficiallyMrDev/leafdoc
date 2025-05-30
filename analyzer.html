@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analyzer | LeafDoc</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="index.html" class="logo">LeafDoc</a>
+      <div class="nav-links">
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+      </div>
+    </nav>
+
+    <div class="analyzer-container">
+      <h1>Leaf Disease Analyzer</h1>
+      <p class="subtitle">Choose how you'd like to analyze a leaf:</p>
+
+      <div class="input-methods">
+        <div class="method-card" id="capture-method">
+          <div class="method-icon">
+            <i class="fas fa-camera"></i>
+          </div>
+          <h3>Capture Photo</h3>
+          <p>Use your device's camera to take a new photo</p>
+          <button class="method-button">Open Camera</button>
+        </div>
+
+        <div class="method-card" id="upload-method">
+          <div class="method-icon">
+            <i class="fas fa-upload"></i>
+          </div>
+          <h3>Upload Image</h3>
+          <p>Select an existing image from your device</p>
+          <input
+            type="file"
+            id="file-upload"
+            accept="image/*"
+            style="display: none"
+          />
+          <button
+            class="method-button"
+            onclick="document.getElementById('file-upload').click()"
+          >
+            Choose File
+          </button>
+        </div>
+
+        <div class="method-card" id="examples-method">
+          <div class="method-icon">
+            <i class="fas fa-list-ul"></i>
+          </div>
+          <h3>Try Examples</h3>
+          <p>Test with our preloaded sample images</p>
+          <button class="method-button" onclick="showExamples()">
+            View Samples
+          </button>
+        </div>
+      </div>
+
+      <div class="examples-section" id="examples-section" style="display: none">
+        <h2>Sample Leaf Images</h2>
+        <div class="image-gallery">
+          <div class="sample-image" onclick="analyzeSample('healthy_apple')">
+            <img src="images/healthy_apple.jpg" alt="Healthy Apple" />
+            <p>Healthy Apple</p>
+          </div>
+          <div class="sample-image" onclick="analyzeSample('apple_scab')">
+            <img src="images/apple_scab.jpg" alt="Apple Scab" />
+            <p>Apple Scab</p>
+          </div>
+          <div class="sample-image" onclick="analyzeSample('tomato_blight')">
+            <img src="images/tomato_blight.jpg" alt="Tomato Blight" />
+            <p>Tomato Blight</p>
+          </div>
+          <div class="sample-image" onclick="analyzeSample('grape_black_rot')">
+            <img src="images/grape_black_rot.jpg" alt="Grape Black Rot" />
+            <p>Grape Black Rot</p>
+          </div>
+          <div class="sample-image" onclick="analyzeSample('corn_rust')">
+            <img src="images/corn_rust.jpg" alt="Corn Rust" />
+            <p>Corn Rust</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="analysis-section" id="analysis-section"></div>
+      <!-- Add this inside your analyzer.html file -->
+      <div class="analysis-section" id="analysis-section">
+        <!-- This will be populated by JavaScript -->
+      </div>
+
+      <div
+        class="recommendations-section"
+        id="recommendations-section"
+        style="display: none"
+>
+        <h2>Treatment Recommendations</h2>
+        <div class="recommendations-container" id="recommendations-container">
+          <!-- Recommendations will be inserted here -->
+        </div>
+
+        <div class="prevention-tips" id="prevention-tips">
+          <h3>Prevention Tips</h3>
+          <div id="prevention-content">
+            <!-- Prevention tips will be inserted here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>© 2025 LeafDoc | The Officials</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
