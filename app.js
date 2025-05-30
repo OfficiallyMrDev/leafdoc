@@ -86,60 +86,91 @@ function analyzeSample(imageId) {
     // Show analysis section with loading animation
     analysisSection.innerHTML = `
         <div class="analysis-process">
+            <div class="ai-model-info">
+                <i class="fas fa-robot"></i> 
+                Using <strong>${getRandomAIModel()}</strong> for analysis
+            </div>
+            <div class="time-estimate">
+                <i class="fas fa-clock"></i> Estimated time: <span id="time-remaining">20</span> seconds
+            </div>
+            
             <div class="process-step active" id="step1">
                 <div class="process-icon">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="process-text">Analyzing leaf image...</div>
+                <div class="process-text">Initializing image analysis...</div>
                 <div class="progress-bar">
-                    <div class="progress" style="width: 25%"></div>
+                    <div class="progress" style="width: 15%"></div>
                 </div>
             </div>
             <div class="process-step" id="step2">
                 <div class="process-icon">
                     <i class="fas fa-brain"></i>
                 </div>
-                <div class="process-text">Identifying patterns...</div>
+                <div class="process-text">Extracting visual features...</div>
                 <div class="progress-bar">
-                    <div class="progress" style="width: 50%"></div>
+                    <div class="progress" style="width: 35%"></div>
                 </div>
             </div>
             <div class="process-step" id="step3">
                 <div class="process-icon">
-                    <i class="fas fa-clipboard-check"></i>
+                    <i class="fas fa-dna"></i>
                 </div>
-                <div class="process-text">Confirming diagnosis...</div>
+                <div class="process-text">Comparing with disease patterns...</div>
                 <div class="progress-bar">
-                    <div class="progress" style="width: 75%"></div>
+                    <div class="progress" style="width: 65%"></div>
                 </div>
             </div>
             <div class="process-step" id="step4">
                 <div class="process-icon">
-                    <i class="fas fa-spa"></i>
+                    <i class="fas fa-clipboard-check"></i>
                 </div>
-                <div class="process-text">Preparing recommendations...</div>
+                <div class="process-text">Finalizing diagnosis...</div>
                 <div class="progress-bar">
-                    <div class="progress" style="width: 100%"></div>
+                    <div class="progress" style="width: 85%"></div>
                 </div>
             </div>
         </div>
     `;
     
+    // Start countdown timer
+    let timeLeft = 20;
+    const timerElement = document.getElementById('time-remaining');
+    const timerInterval = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = timeLeft;
+        if (timeLeft <= 0) clearInterval(timerInterval);
+    }, 1000);
+    
     // Scroll to analysis section
     analysisSection.scrollIntoView({ behavior: 'smooth' });
     
-    // Simulate analysis process
+    // Simulate analysis process with variable delays
     let step = 1;
-    const interval = setInterval(() => {
-        document.getElementById(`step${step}`).classList.remove('active');
-        step++;
+    const stepDelays = [4000, 4000, 4000, 4000]; // Different delays for each step
+    
+    function processNextStep() {
+        if (step > 1) {
+            document.getElementById(`step${step-1}`).classList.remove('active');
+        }
         if (step <= 4) {
             document.getElementById(`step${step}`).classList.add('active');
+            setTimeout(processNextStep, stepDelays[step-1]);
+            step++;
         } else {
-            clearInterval(interval);
+            clearInterval(timerInterval);
             showAnalysisResult(imageId);
         }
-    }, 1500);
+    }
+    
+    setTimeout(processNextStep, stepDelays[0]);
+}
+
+function getRandomAIModel() {
+    const models = [
+        "LeafSense AI v1.0"
+    ];
+    return models[Math.floor(Math.random() * models.length)];
 }
 
 function showAnalysisResult(imageId) {
